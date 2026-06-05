@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>解语花</title>
+  <link rel="stylesheet" href="sidepanel.css" />
+</head>
+<body>
+  <!-- ============ 顶栏 ============ -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true">
+          <defs>
+            <radialGradient id="camOa" cx="50%" cy="36%" r="66%"><stop offset="0%" stop-color="#ffffff"/><stop offset="68%" stop-color="#f7f1e6"/><stop offset="100%" stop-color="#e4dac6"/></radialGradient>
+            <radialGradient id="camIa" cx="50%" cy="40%" r="62%"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#efe6d4"/></radialGradient>
+          </defs>
+          <g>
+            <ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOa)" transform="rotate(0 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOa)" transform="rotate(45 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOa)" transform="rotate(90 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOa)" transform="rotate(135 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOa)" transform="rotate(180 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOa)" transform="rotate(225 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOa)" transform="rotate(270 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOa)" transform="rotate(315 24 24)"/>
+          </g>
+          <g>
+            <ellipse cx="24" cy="15" rx="3.7" ry="7" fill="url(#camIa)" transform="rotate(22 24 24)"/><ellipse cx="24" cy="15" rx="3.7" ry="7" fill="url(#camIa)" transform="rotate(112 24 24)"/><ellipse cx="24" cy="15" rx="3.7" ry="7" fill="url(#camIa)" transform="rotate(202 24 24)"/><ellipse cx="24" cy="15" rx="3.7" ry="7" fill="url(#camIa)" transform="rotate(292 24 24)"/>
+          </g>
+          <circle cx="24" cy="24" r="3.6" fill="#c9b489"/><circle cx="24" cy="24" r="1.5" fill="#a98f59"/>
+        </svg>
+      </span>
+      <span class="brand-name">解语花</span>
+    </div>
+    <div class="topbar-actions">
+      <button id="newChatBtn" class="icon-btn" title="新对话" aria-label="新对话">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      </button>
+      <button id="settingsBtn" class="icon-btn" title="设置" aria-label="设置">
+        <svg viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============ 聊天视图 ============ -->
+  <main id="chatView" class="chat-view">
+    <div id="messages" class="messages">
+      <div class="empty-state" id="emptyState">
+        <div class="empty-mark">
+          <svg viewBox="0 0 48 48" width="32" height="32" aria-hidden="true">
+            <defs>
+              <radialGradient id="camOb" cx="50%" cy="36%" r="66%"><stop offset="0%" stop-color="#ffffff"/><stop offset="68%" stop-color="#f7f1e6"/><stop offset="100%" stop-color="#e4dac6"/></radialGradient>
+              <radialGradient id="camIb" cx="50%" cy="40%" r="62%"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#efe6d4"/></radialGradient>
+            </defs>
+            <g>
+              <ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOb)" transform="rotate(0 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOb)" transform="rotate(45 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOb)" transform="rotate(90 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOb)" transform="rotate(135 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOb)" transform="rotate(180 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOb)" transform="rotate(225 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOb)" transform="rotate(270 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOb)" transform="rotate(315 24 24)"/>
+            </g>
+            <g>
+              <ellipse cx="24" cy="15" rx="3.7" ry="7" fill="url(#camIb)" transform="rotate(22 24 24)"/><ellipse cx="24" cy="15" rx="3.7" ry="7" fill="url(#camIb)" transform="rotate(112 24 24)"/><ellipse cx="24" cy="15" rx="3.7" ry="7" fill="url(#camIb)" transform="rotate(202 24 24)"/><ellipse cx="24" cy="15" rx="3.7" ry="7" fill="url(#camIb)" transform="rotate(292 24 24)"/>
+            </g>
+            <circle cx="24" cy="24" r="3.6" fill="#c9b489"/><circle cx="24" cy="24" r="1.5" fill="#a98f59"/>
+          </svg>
+        </div>
+        <p class="empty-title">划词绽放 · 就地解释</p>
+        <p class="empty-sub">在网页选中文字 → 轻点冒出的解语花,<br/>解释会就地弹出小气泡。这里可手动提问或设置。</p>
+      </div>
+    </div>
+
+    <div class="composer">
+      <textarea id="input" class="composer-input" rows="1" placeholder="输入问题,Enter 发送 / Shift+Enter 换行…"></textarea>
+      <button id="sendBtn" class="send-btn" title="发送" aria-label="发送">
+        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 12l16-8-6 8 6 8z" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </main>
+
+  <!-- ============ 设置视图 ============ -->
+  <section id="settingsView" class="settings-view hidden">
+    <div class="settings-scroll">
+      <h2 class="settings-h">模型设置</h2>
+
+      <label class="field">
+        <span class="field-label">服务商</span>
+        <select id="provider" class="field-control">
+          <option value="openai">OpenAI (ChatGPT)</option>
+          <option value="deepseek">DeepSeek</option>
+          <option value="moonshot">Moonshot / Kimi</option>
+          <option value="zhipu">智谱 GLM</option>
+          <option value="doubao">豆包 (火山方舟)</option>
+          <option value="qwen">通义千问</option>
+          <option value="openrouter">OpenRouter</option>
+          <option value="anthropic">Anthropic (Claude)</option>
+          <option value="custom">自定义 (OpenAI 兼容)</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <span class="field-label">API Key</span>
+        <input id="apiKey" class="field-control" type="password" placeholder="sk-..." autocomplete="off" />
+        <span class="field-hint">保存在本地浏览器中;调用模型时会发送给你选择的服务商用于鉴权。</span>
+      </label>
+
+      <label class="field">
+        <span class="field-label">模型名称</span>
+        <input id="model" class="field-control" type="text" placeholder="例如 gpt-4o-mini" />
+      </label>
+
+      <label class="field">
+        <span class="field-label">接口地址 (Base URL)</span>
+        <input id="baseUrl" class="field-control" type="text" placeholder="https://api.openai.com/v1" />
+        <span class="field-hint">选择服务商后会自动填好,自定义时再手动改。</span>
+      </label>
+
+      <label class="field">
+        <span class="field-label">系统提示词 (可选)</span>
+        <textarea id="systemPrompt" class="field-control" rows="3" placeholder="例如:你是一个善于把复杂概念讲清楚的中文助手。"></textarea>
+      </label>
+
+      <div class="settings-actions">
+        <button id="saveBtn" class="primary-btn">保存设置</button>
+        <span id="saveHint" class="save-hint"></span>
+      </div>
+    </div>
+  </section>
+
+  <script src="sidepanel.js"></script>
+</body>
+</html>
