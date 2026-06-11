@@ -1,94 +1,192 @@
-# 解语花 · AI 划词解释
+# Jieyuhua - Inline AI Text Explainer for Chrome
 
-> 在网页上划选文字,光标旁会绽放一朵山茶花;轻点即可让 AI 就地解释,并能继续追问。
+Jieyuhua is a lightweight Chrome extension that explains selected webpage text in place. Select text, click the floating camellia button, and get a streaming AI explanation without leaving the page.
 
-解语花是一个轻量的 Chrome 扩展(Manifest V3)。它会在你选中文字后显示一个山茶花按钮,点击后在当前页面弹出解释气泡,并以流式输出展示回答。你也可以打开侧边栏进行手动提问和模型设置。
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![Chrome Extension](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4.svg)](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3)
+[![No Build Step](https://img.shields.io/badge/Build-none-brightgreen.svg)](#installation)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES2020-F7DF1E.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
-## 功能
+## Highlights
 
-- 划词后在光标旁显示山茶花按钮
-- 在当前页面就地展示解释气泡,无需切换窗口
-- 支持在气泡中继续追问,保留当前上下文
-- 侧边栏支持手动对话、服务商选择、模型名和系统提示词设置
-- 支持 OpenAI、DeepSeek、Moonshot/Kimi、智谱 GLM、豆包、通义千问、OpenRouter、Anthropic Claude,以及自定义 OpenAI 兼容接口
-- 无远程后台服务、无统计脚本、无构建步骤
+- Inline explanation bubble for selected text
+- Streaming AI responses directly inside the current webpage
+- Follow-up questions without reopening a separate chat app
+- Chrome Side Panel for manual chat and model settings
+- Built-in presets for OpenAI, DeepSeek, Moonshot/Kimi, Zhipu GLM, Doubao, Qwen, OpenRouter, and Anthropic Claude
+- Custom OpenAI-compatible endpoint support
+- Local-first configuration with no project-owned backend server
+- Plain HTML, CSS, and JavaScript; no bundler or build step required
 
-## 安装
+## How It Works
 
-### 从源码安装
+```mermaid
+flowchart LR
+  A["Select text on a webpage"] --> B["Content script shows the camellia button"]
+  B --> C["User clicks explain"]
+  C --> D["Background service worker loads local settings"]
+  D --> E["Configured AI provider receives the request"]
+  E --> F["Streaming response returns to the inline bubble"]
+```
 
-1. 下载本仓库,或执行 `git clone`。
-2. Chrome 打开 `chrome://extensions/`。
-3. 开启右上角的「开发者模式」。
-4. 点击「加载已解压的扩展程序」。
-5. 选择包含 `manifest.json` 的项目文件夹。
-6. 点浏览器工具栏中的扩展图标,打开侧边栏设置服务商、模型和 API Key。
+## Installation
 
-### 使用
+### Install from source
 
-1. 在任意网页选中文字。
-2. 点击光标旁出现的山茶花按钮。
-3. 在弹出的解释气泡中查看回答,也可以继续追问。
+1. Clone or download this repository.
+2. Open `chrome://extensions/` in Chrome.
+3. Enable `Developer mode`.
+4. Click `Load unpacked`.
+5. Select the repository folder that contains `manifest.json`.
+6. Open the extension Side Panel, choose a provider, enter an API key, and save.
 
-你也可以选中文字后使用右键菜单「用解语花解释」。
+```bash
+git clone https://github.com/keer-d/jieyuhua-extension.git
+cd jieyuhua-extension
+```
 
-## 服务商预设
+## Usage
 
-| 服务商 | 接口地址 | 默认模型 |
-| --- | --- | --- |
-| OpenAI | `https://api.openai.com/v1` | `gpt-4o-mini` |
-| DeepSeek | `https://api.deepseek.com/v1` | `deepseek-chat` |
-| Moonshot/Kimi | `https://api.moonshot.cn/v1` | `moonshot-v1-8k` |
-| 智谱 GLM | `https://open.bigmodel.cn/api/paas/v4` | `glm-4-plus` |
-| 豆包(火山方舟) | `https://ark.cn-beijing.volces.com/api/v3` | `doubao-seed-1-6-251015` |
-| 通义千问(百炼) | `https://dashscope.aliyuncs.com/compatible-mode/v1` | `qwen-plus` |
-| OpenRouter | `https://openrouter.ai/api/v1` | `openai/gpt-4o-mini` |
-| Anthropic | `https://api.anthropic.com/v1` | `claude-3-5-sonnet-20241022` |
+1. Select text on any webpage.
+2. Click the floating camellia button next to the selection.
+3. Read the inline streaming explanation.
+4. Ask follow-up questions from the same bubble.
 
-豆包的模型名可能需要按火山方舟控制台里的接入点或模型填写,也可以使用 `ep-` 开头的接入点 ID。
+You can also use the context menu item: `Explain with Jieyuhua`.
 
-## 权限说明
+## Provider Presets
 
-本扩展使用以下 Chrome 权限:
+| Provider | Base URL | Default model | Format |
+| --- | --- | --- | --- |
+| OpenAI | `https://api.openai.com/v1` | `gpt-4o-mini` | OpenAI-compatible |
+| DeepSeek | `https://api.deepseek.com/v1` | `deepseek-chat` | OpenAI-compatible |
+| Moonshot/Kimi | `https://api.moonshot.cn/v1` | `moonshot-v1-8k` | OpenAI-compatible |
+| Zhipu GLM | `https://open.bigmodel.cn/api/paas/v4` | `glm-4-plus` | OpenAI-compatible |
+| Doubao | `https://ark.cn-beijing.volces.com/api/v3` | `doubao-seed-1-6-251015` | OpenAI-compatible |
+| Qwen | `https://dashscope.aliyuncs.com/compatible-mode/v1` | `qwen-plus` | OpenAI-compatible |
+| OpenRouter | `https://openrouter.ai/api/v1` | `openai/gpt-4o-mini` | OpenAI-compatible |
+| Anthropic | `https://api.anthropic.com/v1` | `claude-3-5-sonnet-20241022` | Anthropic Messages API |
 
-- `contextMenus`: 添加划词右键菜单。
-- `storage`: 在本地浏览器保存服务商、模型、接口地址、系统提示词和 API Key。
-- `sidePanel`: 提供侧边栏设置和手动问答界面。
-- `host_permissions`: 允许向已配置的 AI 服务商接口发起请求。
+See [Provider Examples](./docs/provider-examples.md) for copy-paste configuration examples.
 
-`manifest.json` 中包含 `https://*/*`,用于支持自定义 OpenAI 兼容接口。如果你不需要自定义接口,可以删除这一项,只保留你实际使用的服务商域名。
+## Examples
 
-## 隐私与安全
+### OpenAI
 
-代码中不包含任何 API Key。API Key 由用户在运行时填写,保存在 Chrome 本地存储中。
+```text
+Provider: OpenAI
+Base URL: https://api.openai.com/v1
+Model: gpt-4o-mini
+API Key: sk-...
+```
 
-当你使用划词解释或继续追问时,选中的文本、提问内容和对话上下文会发送给你在设置中选择的 AI 服务商接口。项目没有自建服务器,也没有统计或追踪脚本。更多说明见 [PRIVACY.md](./PRIVACY.md)。
+### OpenRouter
 
-请不要把真实 API Key、私有配置、测试日志或打包后的压缩文件提交到仓库。
+```text
+Provider: OpenRouter
+Base URL: https://openrouter.ai/api/v1
+Model: openai/gpt-4o-mini
+API Key: sk-or-...
+```
 
-## 常见问题
+### Custom OpenAI-compatible endpoint
 
-### 气泡一直转圈怎么办?
+```text
+Provider: Custom
+Base URL: https://your-endpoint.example.com/v1
+Model: your-model-name
+API Key: your-api-key
+```
 
-多发生在更新扩展后,网页里仍然运行旧版本内容脚本。请在 `chrome://extensions/` 点击本扩展的「刷新」,再刷新正在使用的网页。
+Jieyuhua sends OpenAI-compatible chat completion requests to:
 
-### 为什么有些站点刚更新后不能弹出?
+```http
+POST /chat/completions
+Content-Type: application/json
+Authorization: Bearer <API_KEY>
+```
 
-请先刷新当前网页。本扩展使用内容脚本注入,网页需要重新加载后才会运行最新版本。
+Example request body:
 
-### 这个项目需要构建吗?
+```json
+{
+  "model": "gpt-4o-mini",
+  "stream": true,
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain this selected text clearly."
+    }
+  ]
+}
+```
 
-不需要。所有文件都是原生 HTML、CSS 和 JavaScript,加载包含 `manifest.json` 的目录即可。
+## Project Structure
 
-## 开源发布建议
+```text
+.
+|-- background.js        # Service worker, context menu, provider streaming
+|-- content.js           # Webpage selection UI and inline explanation bubble
+|-- sidepanel.html       # Chrome Side Panel UI
+|-- sidepanel.css        # Side Panel styling
+|-- sidepanel.js         # Side Panel settings and manual chat logic
+|-- manifest.json        # Chrome Manifest V3 configuration
+|-- icons/               # Extension icons
+|-- docs/                # Architecture and provider examples
+|-- PRIVACY.md           # Privacy policy
+|-- CONTRIBUTING.md      # Contribution guide
+`-- DEVELOPMENT.md       # Local development workflow
+```
 
-发布到 GitHub 前建议确认:
+## Permissions
 
-- `LICENSE` 中的版权署名已经改成你的名字、组织名或项目贡献者名称。
-- README 中的功能、模型名、权限说明与当前代码一致。
-- 仓库里没有真实 API Key、私密截图、`.DS_Store`、日志文件或压缩包。
-- 如果要发布到 Chrome Web Store,再单独补充商店截图、隐私政策链接和更严格的权限说明。
+Jieyuhua uses the following Chrome permissions:
 
-## 许可证
+- `contextMenus`: adds the selected-text context menu action.
+- `storage`: stores provider, model, API key, endpoint, and prompt settings locally.
+- `sidePanel`: provides the settings and manual chat interface.
+- `host_permissions`: allows requests to configured AI provider endpoints.
 
-本项目基于 [MIT License](./LICENSE) 开源。
+The manifest includes `https://*/*` so users can configure custom OpenAI-compatible endpoints. If you only need fixed providers, you can remove that wildcard and keep only the provider domains you use.
+
+## Privacy
+
+Jieyuhua has no project-owned backend server and no analytics script. API keys and settings are stored in the user's local browser storage.
+
+When you ask for an explanation, the selected text, follow-up messages, conversation context, and provider authentication information are sent to the AI provider you configured. Read [PRIVACY.md](./PRIVACY.md) before using the extension with sensitive content.
+
+## Development
+
+No build step is required. Edit the source files, reload the extension in `chrome://extensions/`, and refresh the target webpage.
+
+For debugging, packaging, and contribution workflow, see [DEVELOPMENT.md](./DEVELOPMENT.md).
+
+## Troubleshooting
+
+### The explanation bubble keeps loading
+
+Reload the extension from `chrome://extensions/`, then refresh the webpage. Chrome content scripts continue running until the page is reloaded.
+
+### The API request fails
+
+Check your provider, base URL, model name, API key, and account quota. Some providers require model-specific endpoint IDs.
+
+### The icon does not appear
+
+Make sure the `icons/` folder is present and contains `icon16.png`, `icon48.png`, and `icon128.png`.
+
+## Roadmap
+
+- Optional screenshot/demo section
+- Exportable settings backup
+- Provider-specific error messages
+- Keyboard shortcut support
+- Chrome Web Store packaging checklist
+
+## Contributing
+
+Contributions are welcome. Please read [CONTRIBUTING.md](./CONTRIBUTING.md) before opening a pull request.
+
+## License
+
+This project is licensed under the [MIT License](./LICENSE).

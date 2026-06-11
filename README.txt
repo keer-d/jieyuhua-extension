@@ -1,9 +1,10 @@
-解语花 · AI 划词解释 —— 快速安装
+Jieyuhua - Quick Install
 
-1. 解压。Chrome 打开 chrome://extensions/,开启开发者模式。
-2. 加载已解压的扩展程序,选含 manifest.json 的文件夹。
-3. 点工具栏花朵 → 齿轮 → 选服务商、填 API Key → 保存。
-4. 网页划词 → 点冒出的山茶花 → 就地看解释、可追问。
+1. Open chrome://extensions/ in Chrome.
+2. Enable Developer mode.
+3. Click "Load unpacked".
+4. Select the folder that contains manifest.json.
+5. Open the Side Panel, choose a provider, enter your API key, and save.
+6. Select text on a webpage and click the floating camellia button.
 
-更新扩展后,记得回 chrome://extensions/ 点「刷新」,并 F5 刷新正在用的网页,否则可能一直转圈。
-API Key 只存本地,不上传第三方。
+After updating the extension, reload it in chrome://extensions/ and refresh any webpage that is already open.

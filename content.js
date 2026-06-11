@@ -1,10 +1,10 @@
-// content.js —— 划词冒出山茶花;点击就地弹气泡(高奢质感),流式解释 + 追问;含超时/断连兜底
+// content.js - Selection UI, inline explanation bubble, streaming follow-ups, and timeout handling.
 
 (function () {
   if (window.__jieyuhuaInjected) return;
   window.__jieyuhuaInjected = true;
 
-  // ---------- 山茶花 SVG(双层白瓣 + 淡金花心)----------
+  // ---------- Camellia SVG ----------
   function camellia(size) {
     const outer = [0, 45, 90, 135, 180, 225, 270, 315]
       .map((a) => `<ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camO)" transform="rotate(${a} 24 24)"/>`).join("");
@@ -30,7 +30,7 @@
     root.replaceChildren(...[...doc.head.childNodes, ...doc.body.childNodes]);
   }
 
-  // ---------- Shadow DOM 根 ----------
+  // ---------- Shadow DOM root ----------
   const host = document.createElement("div");
   host.style.cssText = "all:initial;position:fixed;z-index:2147483647;top:0;left:0;";
   const shadow = host.attachShadow({ mode: "open" });
@@ -88,14 +88,14 @@
                   background:#1b1813; border-radius:11px; color:#f3ead6; }
       .ask .send:hover{ background:#2c271d; } .ask .send:active{ transform:scale(.92); }
     </style>
-    <button class="flower" title="用解语花解释">${camellia(24)}</button>
+    <button class="flower" title="Explain with Jieyuhua">${camellia(24)}</button>
     <div class="card">
-      <div class="head">${camellia(20)}<span class="name">解 语 花</span><button class="x" title="关闭">×</button></div>
+      <div class="head">${camellia(20)}<span class="name">Jieyuhua</span><button class="x" title="Close">×</button></div>
       <div class="gold-line"></div>
       <div class="body"></div>
       <div class="ask">
-        <textarea rows="1" placeholder="继续追问…"></textarea>
-        <button class="send" title="发送"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 12l16-8-6 8 6 8z" fill="currentColor"/></svg></button>
+        <textarea rows="1" placeholder="Ask a follow-up..."></textarea>
+        <button class="send" title="Send"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 12l16-8-6 8 6 8z" fill="currentColor"/></svg></button>
       </div>
     </div>`);
   document.documentElement.appendChild(host);
@@ -173,7 +173,7 @@
   function openCardForExplain(text) {
     history = [{
       role: "user",
-      content: `请用简体中文清楚地解释下面这段内容,先给一句话概括,再展开说明:\n\n"""${text}"""`,
+      content: `Explain the following selected text clearly in English. Start with a one-sentence summary, then expand with the key details:\n\n"""${text}"""`,
       display: text,
     }];
     card.style.display = "block";
@@ -188,7 +188,7 @@
   }
   shadow.querySelector(".head .x").addEventListener("click", closeCard);
 
-  // ---------- 健壮的流式请求:超时 + 断连兜底 ----------
+  // ---------- Robust streaming request with timeout and disconnect handling ----------
   function startStream() {
     history.push({ role: "assistant", content: "" });
     streaming = true;
@@ -197,7 +197,7 @@
     const apiMsgs = history.slice(0, -1).map((m) => ({ role: m.role, content: m.content }));
 
     let settled = false, port = null, watchdog = null;
-    const arm = () => { clearTimeout(watchdog); watchdog = setTimeout(() => fail("请求超时(30 秒无响应)。请检查网络或接口地址后重试。"), 30000); };
+    const arm = () => { clearTimeout(watchdog); watchdog = setTimeout(() => fail("Request timed out after 30 seconds with no response. Check your network or base URL and try again."), 30000); };
     const cleanup = () => { clearTimeout(watchdog); try { port && port.disconnect(); } catch (_) {} };
     const fail = (m) => { if (settled) return; settled = true; streaming = false; last.content = ""; last.error = m; render(false); cleanup(); };
     const finish = () => { if (settled) return; settled = true; streaming = false; render(false); cleanup(); };
@@ -205,7 +205,7 @@
     try {
       port = chrome.runtime.connect({ name: "explain-stream" });
     } catch (e) {
-      return fail("扩展刚更新过,请刷新当前网页后再试。");
+      return fail("The extension was just updated. Refresh the current webpage and try again.");
     }
     arm();
     port.onMessage.addListener((m) => {
@@ -217,10 +217,10 @@
     port.onDisconnect.addListener(() => {
       if (settled) return;
       const le = chrome.runtime.lastError;
-      fail(le ? "连接中断,请刷新当前网页后再试。" : "连接意外关闭,请重试。");
+      fail(le ? "The connection was interrupted. Refresh the current webpage and try again." : "The connection closed unexpectedly. Please try again.");
     });
     try { port.postMessage({ type: "start", messages: apiMsgs }); }
-    catch (e) { fail("发送失败,请刷新当前网页后再试。"); }
+    catch (e) { fail("Failed to send the request. Refresh the current webpage and try again."); }
   }
 
   function render(isStreaming) {
@@ -231,9 +231,9 @@
           ? `<div class="quote">${esc(m.display || m.content)}</div>`
           : `<div class="ask-line">${esc(m.display || m.content)}</div>`;
       } else if (m.needKey) {
-        html += `<div class="setup">还没设置 API Key。点 <button class="open">打开设置</button>,在齿轮里填好服务商和 Key 后再划词即可。</div>`;
+        html += `<div class="setup">No API key is configured yet. Click <button class="open">Open Settings</button>, choose a provider, enter your key, and try again.</div>`;
       } else if (m.error) {
-        html += `<div class="err">出错了:${esc(m.error)}</div>`;
+        html += `<div class="err">Error: ${esc(m.error)}</div>`;
       } else if (!m.content && isStreaming && i === history.length - 1) {
         html += `<div class="typing"><i></i><i></i><i></i></div>`;
       } else {

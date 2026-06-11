@@ -6,7 +6,7 @@
   --text: #221d15;
   --text-dim: #8a7e68;
   --text-faint: #b3a88f;
-  --accent: #b0905a;          /* 香槟金 */
+  --accent: #b0905a;          /* champagne gold */
   --accent-deep: #8a6c3c;
   --accent-soft: #ece2cd;
   --user-bubble: #efe6d3;
@@ -32,7 +32,7 @@ html, body {
 body { display: flex; flex-direction: column; overflow: hidden; }
 .hidden { display: none !important; }
 
-/* ---------- 顶栏 ---------- */
+/* ---------- Top bar ---------- */
 .topbar {
   display: flex; align-items: center; justify-content: space-between;
   padding: 13px 15px;
@@ -66,7 +66,7 @@ body { display: flex; flex-direction: column; overflow: hidden; }
 }
 .icon-btn:hover { background: var(--accent-soft); color: var(--accent-deep); }
 
-/* ---------- 聊天视图 ---------- */
+/* ---------- Chat view ---------- */
 .chat-view { flex: 1; display: flex; flex-direction: column; min-height: 0; }
 .messages {
   flex: 1; overflow-y: auto;
@@ -129,7 +129,7 @@ body { display: flex; flex-direction: column; overflow: hidden; }
   background: rgba(154,90,58,.08); border-radius: 10px; padding: 8px 11px;
 }
 
-/* ---------- 输入框 ---------- */
+/* ---------- Composer ---------- */
 .composer {
   display: flex; align-items: flex-end; gap: 8px;
   padding: 11px 13px 15px;
@@ -158,7 +158,7 @@ body { display: flex; flex-direction: column; overflow: hidden; }
 .send-btn:active { transform: scale(.92); }
 .send-btn:disabled { opacity: .4; cursor: not-allowed; }
 
-/* ---------- 设置 ---------- */
+/* ---------- Settings ---------- */
 .settings-view { flex: 1; overflow-y: auto; }
 .settings-scroll { padding: 20px 17px 30px; display: flex; flex-direction: column; gap: 17px; }
 .settings-h { font-family: var(--serif); font-size: 19px; font-weight: 600; letter-spacing: .06em; }

@@ -1,6 +1,6 @@
-// sidepanel.js —— 侧边栏逻辑
+// sidepanel.js - Side Panel settings and chat logic.
 
-/* ============ 服务商预设 ============ */
+/* ============ Provider presets ============ */
 const PRESETS = {
   openai:     { baseUrl: "https://api.openai.com/v1",                         model: "gpt-4o-mini",                  format: "openai" },
   deepseek:   { baseUrl: "https://api.deepseek.com/v1",                       model: "deepseek-chat",                format: "openai" },
@@ -22,12 +22,12 @@ const emptyState = $("emptyState");
 const inputEl = $("input");
 const sendBtn = $("sendBtn");
 
-/* ============ 会话状态 ============ */
+/* ============ Session state ============ */
 let history = [];        // [{role:'user'|'assistant', content:'...'}]
 let settings = {};
 let streaming = false;
 
-/* ============ 初始化 ============ */
+/* ============ Initialization ============ */
 init();
 
 async function init() {
@@ -37,7 +37,7 @@ async function init() {
   await checkPendingSelection();
 }
 
-/* ============ 设置存取 ============ */
+/* ============ Settings storage ============ */
 async function loadSettings() {
   const data = await chrome.storage.local.get("settings");
   return Object.assign(
@@ -56,7 +56,7 @@ function fillSettingsForm(s) {
   $("systemPrompt").value = s.systemPrompt || "";
 }
 
-/* ============ 事件绑定 ============ */
+/* ============ Event binding ============ */
 function bindEvents() {
   $("settingsBtn").addEventListener("click", toggleSettings);
   $("newChatBtn").addEventListener("click", newChat);
@@ -79,7 +79,7 @@ function bindEvents() {
   });
   inputEl.addEventListener("input", autoGrow);
 
-  // 侧边栏已打开时,后台推送来的新划词
+  // New selected text can be pushed while the Side Panel is already open.
   chrome.runtime.onMessage.addListener((msg) => {
     if (msg?.type === "NEW_SELECTION" && msg.payload) {
       explainSelection(msg.payload);
@@ -108,12 +108,12 @@ async function onSave() {
   };
   await saveSettings(settings);
   const hint = $("saveHint");
-  hint.textContent = "已保存 ✓";
+  hint.textContent = "Saved";
   setTimeout(() => (hint.textContent = ""), 1800);
   setTimeout(toggleSettings, 500);
 }
 
-/* ============ 划词解释 ============ */
+/* ============ Selected text explanation ============ */
 async function checkPendingSelection() {
   const { pendingSelection } = await chrome.storage.local.get("pendingSelection");
   if (pendingSelection && Date.now() - pendingSelection.ts < 15000) {
@@ -125,18 +125,18 @@ async function checkPendingSelection() {
 function explainSelection(payload) {
   const text = (payload.text || "").trim();
   if (!text) return;
-  // 显示来源上下文小标签
+  // Display the selected source text as a context chip.
   const chip = document.createElement("div");
   chip.className = "context-chip";
-  chip.textContent = "选中内容:" + text;
+  chip.textContent = "Selected text: " + text;
   ensureChatVisible();
   hideEmpty();
   messagesEl.appendChild(chip);
-  const prompt = `请用简体中文清楚地解释下面这段内容,先给一句话概括,再展开说明:\n\n"""${text}"""`;
-  send(prompt, `请解释:${text.slice(0, 40)}${text.length > 40 ? "…" : ""}`);
+  const prompt = `Explain the following selected text clearly in English. Start with a one-sentence summary, then expand with the key details:\n\n"""${text}"""`;
+  send(prompt, `Explain: ${text.slice(0, 40)}${text.length > 40 ? "..." : ""}`);
 }
 
-/* ============ 发送消息 ============ */
+/* ============ Send messages ============ */
 function onSend() {
   const val = inputEl.value.trim();
   if (!val || streaming) return;
@@ -147,7 +147,7 @@ function onSend() {
 
 async function send(content, displayText) {
   if (!settings.apiKey) {
-    addError("还没有填写 API Key,请先点右上角齿轮进入设置。");
+    addError("No API key is configured yet. Open Settings, choose a provider, enter your API key, and save.");
     toggleSettings();
     return;
   }
@@ -170,12 +170,12 @@ async function send(content, displayText) {
       scrollToBottom();
     });
     if (!full.trim()) {
-      aiBubble.innerHTML = renderMarkdown("(模型没有返回内容)");
+      aiBubble.innerHTML = renderMarkdown("(The model returned no content.)");
     } else {
       history.push({ role: "assistant", content: full });
     }
   } catch (err) {
-    aiBubble.outerHTML = `<div class="msg ai"><div class="error-note">出错了:${escapeHtml(err.message || String(err))}</div></div>`;
+    aiBubble.outerHTML = `<div class="msg ai"><div class="error-note">Error: ${escapeHtml(err.message || String(err))}</div></div>`;
   } finally {
     streaming = false;
     sendBtn.disabled = false;
@@ -183,7 +183,7 @@ async function send(content, displayText) {
   }
 }
 
-/* ============ 流式请求 ============ */
+/* ============ Streaming requests ============ */
 async function streamChat(msgs, onChunk) {
   const fmt = PRESETS[settings.provider]?.format || "openai";
   return fmt === "anthropic"
@@ -250,7 +250,7 @@ async function streamAnthropic(msgs, onChunk) {
   });
 }
 
-// 通用 SSE 读取:按 "data: " 行解析
+// Generic SSE reader: parse lines that start with "data:".
 async function readSSE(res, handleData) {
   const reader = res.body.getReader();
   const decoder = new TextDecoder();
@@ -279,11 +279,11 @@ async function safeErr(res) {
   }
 }
 
-/* ============ 渲染 ============ */
+/* ============ Rendering ============ */
 function addBubble(role, text) {
   const wrap = document.createElement("div");
   wrap.className = `msg ${role}`;
-  const label = role === "user" ? "你" : "解语花";
+  const label = role === "user" ? "You" : "Jieyuhua";
   const bubble = document.createElement("div");
   bubble.className = "bubble";
   if (role === "ai") bubble.innerHTML = renderMarkdown(text);
@@ -318,7 +318,7 @@ function ensureChatVisible() {
 }
 function scrollToBottom() { messagesEl.scrollTop = messagesEl.scrollHeight; }
 
-/* 轻量 Markdown:转义后处理 代码块/行内代码/加粗/列表/段落 */
+/* Lightweight Markdown: escape first, then handle code, bold text, lists, and paragraphs. */
 function renderMarkdown(src) {
   let s = escapeHtml(src);
   const blocks = [];

@@ -1,4 +1,4 @@
-// background.js —— Service Worker:右键菜单 + 为内联气泡做流式请求(带健壮的错误回传)
+// background.js - Service worker for context menu actions and inline streaming requests.
 
 const MENU_ID = "jieyuhua-explain";
 
@@ -16,7 +16,7 @@ const PRESETS = {
 
 chrome.runtime.onInstalled.addListener(() => {
   chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(() => {});
-  chrome.contextMenus.create({ id: MENU_ID, title: "用解语花解释「%s」", contexts: ["selection"] });
+  chrome.contextMenus.create({ id: MENU_ID, title: 'Explain with Jieyuhua: "%s"', contexts: ["selection"] });
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
@@ -30,7 +30,7 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
   }
 });
 
-/* ============ 流式请求(经长连接 Port 推回内容脚本) ============ */
+/* ============ Streaming through a long-lived Port ============ */
 async function loadSettings() {
   const { settings } = await chrome.storage.local.get("settings");
   return Object.assign(
@@ -43,7 +43,7 @@ chrome.runtime.onConnect.addListener((port) => {
   if (port.name !== "explain-stream") return;
   port.onMessage.addListener(async (msg) => {
     if (msg?.type !== "start") return;
-    // 整个流程包在 try 里,确保任何异常都会回传,绝不让气泡无限 load
+      // Always return errors to the content script so the bubble never spins forever.
     try {
       const s = await loadSettings();
       if (!s.apiKey) { post(port, { type: "need-key" }); return; }

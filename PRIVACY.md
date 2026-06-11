@@ -1,35 +1,37 @@
-# 隐私说明
+# Privacy Policy
 
-解语花是一个本地运行的 Chrome 扩展。项目没有自建服务器,也没有统计、追踪或广告脚本。
+Jieyuhua is a local Chrome extension. The project does not run its own backend server and does not include analytics, tracking, advertising, or telemetry scripts.
 
-## 本地保存的数据
+## Data Stored Locally
 
-扩展会通过 `chrome.storage.local` 在你的浏览器本地保存以下配置:
+The extension uses `chrome.storage.local` to store configuration in your browser:
 
-- 服务商
-- API Key
-- 模型名称
-- 接口地址
-- 系统提示词
-- 短时间的待解释划词内容
+- AI provider
+- API key
+- Model name
+- Base URL
+- Optional system prompt
+- Short-lived selected text payloads used to open the Side Panel flow
 
-这些数据不会被提交到本仓库,也不会被发送到项目作者的服务器。
+These values are not sent to the project maintainers.
 
-## 会发送给 AI 服务商的数据
+## Data Sent to AI Providers
 
-当你使用划词解释、继续追问或侧边栏对话时,扩展会向你选择的 AI 服务商接口发送:
+When you use inline explanation, follow-up questions, or Side Panel chat, the extension sends the following data to the provider you configured:
 
-- 选中的网页文字
-- 你的提问内容
-- 当前对话上下文
-- API Key 或对应服务商要求的鉴权信息
+- Selected webpage text
+- Your prompt or follow-up message
+- Current conversation context
+- API key or provider-specific authentication headers
 
-请在使用前确认你信任所选择的服务商,并避免提交不希望被外部模型服务处理的敏感内容。
+You should only use providers you trust. Do not send sensitive, private, or regulated data unless you understand the provider's data handling policy.
 
-## 权限
+## Permissions
 
-扩展需要网页内容脚本来显示划词按钮和解释气泡,并需要主机权限来访问已配置的 AI 接口。`https://*/*` 用于支持自定义 OpenAI 兼容接口;如果你只使用固定服务商,可以在 `manifest.json` 中移除这项并保留具体域名。
+The extension injects a content script to show the selection button and inline explanation bubble. It also needs host permissions to call AI provider APIs.
 
-## 反馈
+The wildcard host permission `https://*/*` exists to support custom OpenAI-compatible endpoints. If you do not need custom endpoints, you can remove this permission from `manifest.json` and keep only the provider domains you use.
 
-如果你发现隐私或安全问题,请通过 GitHub Issue 或仓库维护者提供的联系方式反馈。
+## Contact
+
+Please report privacy or security concerns through GitHub Issues, or contact the repository maintainer privately if the issue should not be public.
