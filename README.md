@@ -7,6 +7,10 @@ Jieyuhua is a lightweight Chrome extension that explains selected webpage text i
 [![No Build Step](https://img.shields.io/badge/Build-none-brightgreen.svg)](#installation)
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES2020-F7DF1E.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
+## Demo
+
+![Jieyuhua inline explanation demo](./docs/demo.gif)
+
 ## Highlights
 
 - Inline explanation bubble for selected text
