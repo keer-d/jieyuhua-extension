@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FluentLoop cover</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { width: 1280px; height: 720px; margin: 0; overflow: hidden; }
+    body {
+      position: relative;
+      color: #f7f0df;
+      background:
+        radial-gradient(circle at 82% 12%, rgba(188, 150, 81, .23), transparent 32%),
+        radial-gradient(circle at 12% 84%, rgba(116, 88, 144, .2), transparent 30%),
+        #0d0b08;
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .grain {
+      position: absolute; inset: 0; opacity: .1; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+    }
+    .copy { position: absolute; left: 72px; top: 68px; width: 500px; z-index: 2; }
+    .eyebrow { color: #d8bc78; font-size: 15px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; }
+    h1 { margin: 20px 0 16px; font-family: Georgia, serif; font-size: 82px; line-height: .94; font-weight: 500; letter-spacing: -.045em; }
+    .lede { width: 455px; color: #c7bdab; font-size: 24px; line-height: 1.4; }
+    .loop { display: flex; align-items: center; gap: 8px; margin-top: 34px; color: #cbb77f; font-size: 14px; letter-spacing: .04em; }
+    .loop i { width: 5px; height: 5px; border-radius: 50%; background: #75608d; box-shadow: 0 0 16px #9a7cb8; }
+    .window {
+      position: absolute; left: 760px; top: 34px; width: 430px; height: 650px;
+      overflow: hidden; border: 1px solid rgba(224, 198, 137, .35); border-radius: 22px;
+      background: #15110c; box-shadow: -22px 34px 90px rgba(0,0,0,.5); transform: rotate(1.4deg);
+    }
+    .bar { height: 34px; display: flex; align-items: center; gap: 8px; padding: 0 14px; border-bottom: 1px solid rgba(224, 198, 137, .15); }
+    .bar span { width: 8px; height: 8px; border-radius: 50%; background: #6c5b3b; }
+    .bar span:nth-child(2) { background: #8b7550; }
+    .bar span:nth-child(3) { background: #c3a765; }
+    .window img { width: 100%; height: calc(100% - 34px); object-fit: contain; object-position: center top; }
+    .flower { position: absolute; left: 432px; bottom: 48px; width: 92px; height: 92px; opacity: .85; }
+    .petal { position: absolute; left: 34px; top: 3px; width: 24px; height: 42px; border-radius: 70% 20% 70% 20%; background: linear-gradient(145deg,#d6bc79,#735889); transform-origin: 12px 43px; }
+    .petal:nth-child(2) { transform: rotate(60deg); }
+    .petal:nth-child(3) { transform: rotate(120deg); }
+    .petal:nth-child(4) { transform: rotate(180deg); }
+    .petal:nth-child(5) { transform: rotate(240deg); }
+    .petal:nth-child(6) { transform: rotate(300deg); }
+  </style>
+</head>
+<body>
+  <div class="grain"></div>
+  <main class="copy">
+    <div class="eyebrow">Personal AI Learning System</div>
+    <h1>Fluent<br>Loop</h1>
+    <div class="lede">Turn the things you read and watch into a learning loop that comes back when it matters.</div>
+    <div class="loop"><span>Capture</span><i></i><span>Understand</span><i></i><span>Save</span><i></i><span>Review</span></div>
+  </main>
+  <div class="flower" aria-hidden="true">
+    <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+    <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+  </div>
+  <section class="window">
+    <div class="bar"><span></span><span></span><span></span></div>
+    <img src="../fluentloop-panel.png" alt="">
+  </section>
+</body>
+</html>

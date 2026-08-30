@@ -1,6 +1,6 @@
 # Provider Examples
 
-This page contains copy-paste configuration examples for the Jieyuhua Side Panel.
+This page contains copy-paste configuration examples for the FluentLoop Side Panel.
 
 ## OpenAI
 
@@ -99,7 +99,7 @@ Model: claude-3-5-sonnet-20241022
 API Key: sk-ant-...
 ```
 
-Jieyuhua uses the Anthropic Messages API with streaming enabled.
+FluentLoop uses the Anthropic Messages API with streaming enabled.
 
 ## Custom OpenAI-compatible Endpoint
 

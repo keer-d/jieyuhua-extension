@@ -1,196 +1,188 @@
-# Jieyuhua - Inline AI Text Explainer for Chrome
+# FluentLoop
 
-Jieyuhua is a lightweight Chrome extension that explains selected webpage text in place. Select text, click the floating camellia button, and get a streaming AI explanation without leaving the page.
+**Turn the things you read and watch into a personal language-learning loop.**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
-[![Chrome Extension](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4.svg)](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3)
-[![No Build Step](https://img.shields.io/badge/Build-none-brightgreen.svg)](#installation)
-[![JavaScript](https://img.shields.io/badge/JavaScript-ES2020-F7DF1E.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+![FluentLoop — personal AI learning system](./docs/fluentloop-cover.png)
 
-## Demo
+[![License: MIT](https://img.shields.io/badge/License-MIT-c9a95e.svg)](./LICENSE)
+[![Chrome Extension](https://img.shields.io/badge/Chrome-Manifest%20V3-17140f.svg)](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3)
+[![Build](https://img.shields.io/badge/Build-none-5f765a.svg)](#install-from-source)
+[![Privacy](https://img.shields.io/badge/Data-local--first-765d8f.svg)](./PRIVACY.md)
 
-![Jieyuhua inline explanation demo](./docs/demo.gif)
+FluentLoop is a local-first Chrome extension for learning English and French in context. It captures words, subtitles, articles, and conversations; turns them into explanations and study material; and brings them back through quizzes and spaced repetition.
 
-## Highlights
+It began as **Jieyuhua**, a small inline text explainer. I kept using it, noticing what was missing, and adding the next useful step. The result is no longer just an explanation bubble—it is a learning system built around a simple loop:
 
-- Inline explanation bubble for selected text
-- Streaming AI responses directly inside the current webpage
-- Follow-up questions without reopening a separate chat app
-- Chrome Side Panel for manual chat and model settings
-- Built-in presets for OpenAI, DeepSeek, Moonshot/Kimi, Zhipu GLM, Doubao, Qwen, OpenRouter, and Anthropic Claude
-- Custom OpenAI-compatible endpoint support
-- Local-first configuration with no project-owned backend server
-- Plain HTML, CSS, and JavaScript; no bundler or build step required
+```text
+Encounter something
+        ↓
+Understand it in context
+        ↓
+Save what matters
+        ↓
+Practise and review
+        ↓
+Meet it again with better understanding
+```
 
-## How It Works
+## Product Tour
+
+<table>
+  <tr>
+    <td width="64%" valign="top">
+      <img src="./docs/fluentloop-studio.png" alt="FluentLoop full-tab study studio" width="100%"><br>
+      <sub><b>Full Studio</b> — deep reading, vocabulary, knowledge realms, practice, and spaced review.</sub>
+    </td>
+    <td width="36%" valign="top">
+      <img src="./docs/fluentloop-panel.png" alt="FluentLoop Chrome side panel" width="100%"><br>
+      <sub><b>Side Panel</b> — quick chat, shelf, capture, practice, and model settings.</sub>
+    </td>
+  </tr>
+</table>
+
+### Inline explanations
+
+Select text on a webpage—or hover over YouTube and Bilibili subtitles—to get a short contextual explanation without leaving what you are reading or watching.
+
+![FluentLoop inline explanation demo](./docs/demo.gif)
+
+### A shelf that becomes a curriculum
+
+Save an article or conversation and FluentLoop extracts useful vocabulary, concepts, contextual examples, and tags. The tags become knowledge realms automatically, so the structure grows from what you actually read rather than from a preset course.
+
+### Practice that comes back at the right time
+
+Saved material becomes cloze questions, translation, sentence writing, contextual meaning, grammar or conjugation practice, and SM-2 review cards. English and French have separate stores, prompts, voices, and review queues.
+
+## Three Surfaces, One Learning Store
 
 ```mermaid
 flowchart LR
-  A["Select text on a webpage"] --> B["Content script shows the camellia button"]
-  B --> C["User clicks explain"]
-  C --> D["Background service worker loads local settings"]
-  D --> E["Configured AI provider receives the request"]
-  E --> F["Streaming response returns to the inline bubble"]
+  A["Webpages & subtitles"] --> B["Inline bubble"]
+  A --> C["Side panel"]
+  D["Articles & conversations"] --> C
+  B --> E["Local learning store"]
+  C --> E
+  E --> F["Full Studio"]
+  F --> G["Deep read"]
+  F --> H["Practice"]
+  F --> I["Spaced review"]
+  G --> E
+  H --> E
+  I --> E
 ```
 
-## Installation
+- **Inline bubble:** understand a word, phrase, or subtitle in place.
+- **Side panel:** ask follow-up questions, capture material, browse the shelf, and practise.
+- **Full Studio:** work through deep reads, exams, vocabulary realms, notes, and scheduled review.
+- **Shared local store:** all three surfaces use the same `chrome.storage.local` data—no account or project-owned backend.
 
-### Install from source
+Read the detailed [architecture notes](./docs/architecture.md).
+
+## Product Decisions
+
+### Short by default, deeper on demand
+
+An inline explanation should preserve reading flow. FluentLoop starts with an accurate translation and a small number of useful terms; the longer explanation is available when the learner asks for it.
+
+### Context before vocabulary lists
+
+The same word can mean something different in a financial article, a product tutorial, or a video interview. Explanations, tags, and questions are generated from the surrounding material instead of forcing everything into one subject.
+
+### Local-first until a backend earns its place
+
+API keys, saved material, notes, and review state stay in the browser profile. This keeps the tool small and understandable. The trade-off is explicit: data does not automatically sync across devices.
+
+### AI generates; code checks
+
+Where possible, deterministic checks sit after model output. For example, multiple-choice questions are verified so the correct answer actually exists among the options. The model helps create material; it does not get the last word on basic validity.
+
+## How It Was Built
+
+FluentLoop is a personal product and an AI-assisted coding project.
+
+I defined the learning problem, product direction, feature requirements, interaction decisions, and iteration priorities. AI coding tools handled much of the implementation. I tested the extension through my own learning workflow, identified where the experience broke down, and kept refining the behavior.
+
+That division of work is intentional: the value of the project is not a claim that every line was typed by hand. It is the process of turning a recurring personal problem into a working system, using it, and making it more coherent over time.
+
+## Features
+
+- Contextual explanations for selected text and video subtitles
+- Streaming responses from a user-selected AI provider
+- Click-to-hear pronunciation with English and French voices
+- Article and conversation capture
+- Auto-generated vocabulary, concepts, tags, and study material
+- Full-tab deep-reading workspace
+- Local quizzes and AI-assisted grading
+- SM-2 spaced repetition
+- Separate English and French learning spaces
+- Local export/import boundary
+- OpenAI, Anthropic, DeepSeek, Doubao, Kimi, GLM, Qwen, OpenRouter, and custom OpenAI-compatible endpoints
+- Plain HTML, CSS, and JavaScript with no build step
+
+## Install From Source
 
 1. Clone or download this repository.
 2. Open `chrome://extensions/` in Chrome.
-3. Enable `Developer mode`.
-4. Click `Load unpacked`.
-5. Select the repository folder that contains `manifest.json`.
-6. Open the extension Side Panel, choose a provider, enter an API key, and save.
+3. Enable **Developer mode**.
+4. Click **Load unpacked**.
+5. Select the folder containing `manifest.json`.
+6. Open the FluentLoop Side Panel, select a provider, enter your own API key, and save.
 
 ```bash
-git clone https://github.com/keer-d/jieyuhua-extension.git
-cd jieyuhua-extension
+git clone https://github.com/keer-d/fluentloop.git
+cd fluentloop
 ```
 
-## Usage
-
-1. Select text on any webpage.
-2. Click the floating camellia button next to the selection.
-3. Read the inline streaming explanation.
-4. Ask follow-up questions from the same bubble.
-
-You can also use the context menu item: `Explain with Jieyuhua`.
-
-## Provider Presets
-
-| Provider | Base URL | Default model | Format |
-| --- | --- | --- | --- |
-| OpenAI | `https://api.openai.com/v1` | `gpt-4o-mini` | OpenAI-compatible |
-| DeepSeek | `https://api.deepseek.com/v1` | `deepseek-chat` | OpenAI-compatible |
-| Moonshot/Kimi | `https://api.moonshot.cn/v1` | `moonshot-v1-8k` | OpenAI-compatible |
-| Zhipu GLM | `https://open.bigmodel.cn/api/paas/v4` | `glm-4-plus` | OpenAI-compatible |
-| Doubao | `https://ark.cn-beijing.volces.com/api/v3` | `doubao-seed-1-6-251015` | OpenAI-compatible |
-| Qwen | `https://dashscope.aliyuncs.com/compatible-mode/v1` | `qwen-plus` | OpenAI-compatible |
-| OpenRouter | `https://openrouter.ai/api/v1` | `openai/gpt-4o-mini` | OpenAI-compatible |
-| Anthropic | `https://api.anthropic.com/v1` | `claude-3-5-sonnet-20241022` | Anthropic Messages API |
-
-See [Provider Examples](./docs/provider-examples.md) for copy-paste configuration examples.
-
-## Examples
-
-### OpenAI
-
-```text
-Provider: OpenAI
-Base URL: https://api.openai.com/v1
-Model: gpt-4o-mini
-API Key: sk-...
-```
-
-### OpenRouter
-
-```text
-Provider: OpenRouter
-Base URL: https://openrouter.ai/api/v1
-Model: openai/gpt-4o-mini
-API Key: sk-or-...
-```
-
-### Custom OpenAI-compatible endpoint
-
-```text
-Provider: Custom
-Base URL: https://your-endpoint.example.com/v1
-Model: your-model-name
-API Key: your-api-key
-```
-
-Jieyuhua sends OpenAI-compatible chat completion requests to:
-
-```http
-POST /chat/completions
-Content-Type: application/json
-Authorization: Bearer <API_KEY>
-```
-
-Example request body:
-
-```json
-{
-  "model": "gpt-4o-mini",
-  "stream": true,
-  "messages": [
-    {
-      "role": "user",
-      "content": "Explain this selected text clearly."
-    }
-  ]
-}
-```
+FluentLoop is not currently distributed through the Chrome Web Store.
 
 ## Project Structure
 
 ```text
 .
-|-- background.js        # Service worker, context menu, provider streaming
-|-- content.js           # Webpage selection UI and inline explanation bubble
-|-- sidepanel.html       # Chrome Side Panel UI
-|-- sidepanel.css        # Side Panel styling
-|-- sidepanel.js         # Side Panel settings and manual chat logic
-|-- manifest.json        # Chrome Manifest V3 configuration
-|-- icons/               # Extension icons
-|-- docs/                # Architecture and provider examples
-|-- PRIVACY.md           # Privacy policy
-|-- CONTRIBUTING.md      # Contribution guide
-`-- DEVELOPMENT.md       # Local development workflow
+├── background.js          # Service worker and provider requests
+├── content.js             # Selection, subtitle, and inline bubble UX
+├── sidepanel.*            # Chat, shelf, capture, practice, and settings
+├── study.*                # Full-tab learning studio
+├── lib/
+│   ├── prompts.js         # Language-aware prompt definitions
+│   ├── store.js           # Cards, realms, and review state
+│   ├── quiz.js            # Shared quiz generation and validation
+│   ├── stream.js          # Streaming helpers
+│   └── *.js               # Rendering, grammar, keys, and visual helpers
+├── docs/                  # Architecture, provider notes, and media
+└── manifest.json          # Chrome Manifest V3 configuration
 ```
 
-## Permissions
+## Privacy and Permissions
 
-Jieyuhua uses the following Chrome permissions:
+FluentLoop has no project-owned server, analytics, advertising, or telemetry. Your provider credentials and learning data are stored in `chrome.storage.local`.
 
-- `contextMenus`: adds the selected-text context menu action.
-- `storage`: stores provider, model, API key, endpoint, and prompt settings locally.
-- `sidePanel`: provides the settings and manual chat interface.
-- `host_permissions`: allows requests to configured AI provider endpoints.
+Selected text, article content, conversation context, and authentication information are sent only to the AI provider you configure when a feature needs a model response. Do not use sensitive material unless you are comfortable sending it to that provider.
 
-The manifest includes `https://*/*` so users can configure custom OpenAI-compatible endpoints. If you only need fixed providers, you can remove that wildcard and keep only the provider domains you use.
+The extension requests broad HTTPS host access so users can choose custom OpenAI-compatible endpoints. See [PRIVACY.md](./PRIVACY.md) for the full data boundary and permission rationale.
 
-## Privacy
+## Current Limits
 
-Jieyuhua has no project-owned backend server and no analytics script. API keys and settings are stored in the user's local browser storage.
+- Manual installation only; no Chrome Web Store package yet
+- Device-local data unless manually exported and imported
+- Provider behavior and model availability can change
+- Subtitle extraction depends on the current YouTube and Bilibili page structure
+- The product is currently validated through personal use rather than a large user base
 
-When you ask for an explanation, the selected text, follow-up messages, conversation context, and provider authentication information are sent to the AI provider you configured. Read [PRIVACY.md](./PRIVACY.md) before using the extension with sensitive content.
+## Next Questions
+
+- How can capture stay almost invisible while still giving the learner control?
+- Which review signals show real understanding rather than short-term recall?
+- Can the system become more personal without requiring a central account or invasive tracking?
+- What is the smallest useful version that another learner can understand without guidance?
 
 ## Development
 
-No build step is required. Edit the source files, reload the extension in `chrome://extensions/`, and refresh the target webpage.
+There is no build step. Edit the files, reload the extension from `chrome://extensions/`, and refresh the target page. See [DEVELOPMENT.md](./DEVELOPMENT.md) for debugging and packaging details.
 
-For debugging, packaging, and contribution workflow, see [DEVELOPMENT.md](./DEVELOPMENT.md).
-
-## Troubleshooting
-
-### The explanation bubble keeps loading
-
-Reload the extension from `chrome://extensions/`, then refresh the webpage. Chrome content scripts continue running until the page is reloaded.
-
-### The API request fails
-
-Check your provider, base URL, model name, API key, and account quota. Some providers require model-specific endpoint IDs.
-
-### The icon does not appear
-
-Make sure the `icons/` folder is present and contains `icon16.png`, `icon48.png`, and `icon128.png`.
-
-## Roadmap
-
-- Optional screenshot/demo section
-- Exportable settings backup
-- Provider-specific error messages
-- Keyboard shortcut support
-- Chrome Web Store packaging checklist
-
-## Contributing
-
-Contributions are welcome. Please read [CONTRIBUTING.md](./CONTRIBUTING.md) before opening a pull request.
+Contributions are welcome through [CONTRIBUTING.md](./CONTRIBUTING.md). Earlier product changes are summarized in [CHANGELOG.md](./CHANGELOG.md).
 
 ## License
 
-This project is licensed under the [MIT License](./LICENSE).
+Code is available under the [MIT License](./LICENSE).

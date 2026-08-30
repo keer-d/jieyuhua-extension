@@ -1,6 +1,6 @@
-# Contributing to Jieyuhua
+# Contributing to FluentLoop
 
-Thanks for your interest in improving Jieyuhua. This project is intentionally small: plain Chrome Extension APIs, no build system, and no project-owned backend.
+Thanks for your interest in improving FluentLoop. This project is intentionally small: plain Chrome Extension APIs, no build system, and no project-owned backend.
 
 ## Ways to Contribute
 
@@ -20,8 +20,8 @@ Thanks for your interest in improving Jieyuhua. This project is intentionally sm
 6. Edit files locally, reload the extension, and refresh the test webpage.
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/jieyuhua-extension.git
-cd jieyuhua-extension
+git clone https://github.com/YOUR_USERNAME/fluentloop.git
+cd fluentloop
 ```
 
 ## Branches

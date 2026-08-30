@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FluentLoop · Studio</title>
+<link rel="stylesheet" href="study.css" />
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="#overview">FLUENTLOOP STUDIO</a>
+    <nav class="nav-links">
+      <button class="nav-link is-on" data-view="overview">Overview</button>
+      <button class="nav-link" data-view="read">Deep Read</button>
+      <button class="nav-link" data-view="practice">Practice</button>
+    </nav>
+    <div class="lang-switch" id="langSwitch"></div>
+    <button class="nav-due hidden" id="navDue"></button>
+  </div>
+</header>
+
+<!-- ================= Overview ================= -->
+<main class="view" id="overviewView">
+  <section class="hero">
+    <p class="eyebrow">Study Studio</p>
+    <h1 class="display" id="heroLine">Ready to Begin</h1>
+    <p class="lede" id="heroSub">Paste an English or French article into Deep Read to dissect vocabulary, concepts, and grammar.</p>
+    <div class="hero-actions">
+      <button class="btn" data-goto="read">Start Deep Read</button>
+      <button class="btn btn-quiet" data-goto="practice">Go to Practice</button>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="figures" id="figures"></div>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h2">Milestone Wall</h2>
+    <p class="sub">Knowledge realms grow from tags. Master words to bloom petals.</p>
+    <div class="wall" id="wall"></div>
+  </section>
+
+  <section class="wrap section hidden" id="cardListSection">
+    <button class="back" id="backToWall">← Milestone Wall</button>
+    <h2 class="h2" id="folderName"></h2>
+    <div class="rows" id="cardRows"></div>
+  </section>
+
+  <section class="wrap section foot">
+    <button class="btn-text" id="exportBtn">Export All Data (JSON)</button>
+    <button class="btn-text" id="importBtn">Import Backup</button>
+    <input type="file" id="importFile" accept="application/json" class="hidden" />
+  </section>
+</main>
+
+<!-- ================= Deep Read ================= -->
+<main class="view hidden" id="readView">
+  <section class="wrap section" id="readIntake">
+    <h1 class="h1">Deep Read</h1>
+    <p class="sub">Paste an article to extract key terminology, core insights, paragraph translation, and cloze exercises.</p>
+    <textarea id="articleInput" class="paste" rows="12" placeholder="Paste article text here…"></textarea>
+    <div class="intake-actions">
+      <button class="btn" id="analyzeBtn" disabled>Analyze Article</button>
+      <span class="hint" id="intakeHint">Typically takes 15 to 30 seconds.</span>
+    </div>
+    <div id="recentPick"></div>
+  </section>
+
+  <section class="wrap section hidden" id="readDoc">
+    <button class="back" id="backToIntake">← Choose Another</button>
+    <p class="eyebrow" id="docTags"></p>
+    <h1 class="h1" id="docTitle"></h1>
+    <p class="lede" id="docSummary"></p>
+    <div class="doc-actions">
+      <button class="btn btn-small" id="saveCardBtn">Save to Vault</button>
+      <span class="hint" id="saveHint"></span>
+    </div>
+
+    <div class="tabs" id="docTabs">
+      <button class="tab is-on" data-pane="vocab">Key Vocabulary</button>
+      <button class="tab" data-pane="econ">Concepts & Insights</button>
+      <button class="tab" data-pane="bilingual">Bilingual Align</button>
+      <button class="tab" data-pane="cloze">Cloze Exercise</button>
+      <button class="tab" data-pane="inflect">Inflections</button>
+      <button class="tab" data-pane="translate">Translation</button>
+      <button class="tab" data-pane="makeup">Make Sentences</button>
+      <button class="tab" data-pane="grammar">Grammar Syntax</button>
+      <button class="tab" data-pane="notes">Notes</button>
+    </div>
+
+    <div class="pane" id="pane-vocab"></div>
+    <div class="pane hidden" id="pane-econ"></div>
+    <div class="pane hidden" id="pane-bilingual"></div>
+    <div class="pane hidden" id="pane-cloze"></div>
+    <div class="pane hidden" id="pane-inflect"></div>
+    <div class="pane hidden" id="pane-translate"></div>
+    <div class="pane hidden" id="pane-makeup"></div>
+    <div class="pane hidden" id="pane-grammar"></div>
+    <div class="pane hidden" id="pane-notes"></div>
+  </section>
+</main>
+
+<!-- ================= Practice ================= -->
+<main class="view hidden" id="practiceView">
+  <section class="wrap section" id="practiceHome">
+    <h1 class="h1">Ebbinghaus Practice</h1>
+    <p class="sub" id="practiceSub"></p>
+
+    <div class="controls">
+      <label class="field">
+        <span class="field-label">Realm / Topic</span>
+        <select id="scope" class="select"></select>
+      </label>
+      <label class="field">
+        <span class="field-label">Generator Engine</span>
+        <select id="quizSource" class="select">
+          <option value="local">Instant Local Smart Generator (Free & Offline)</option>
+          <option value="ai">AI Deep Context Generator</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="hero-actions">
+      <button class="btn" id="startExam">Start Practice<span id="dueCount"></span></button>
+    </div>
+    <div class="review-quick-bar" style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+      <button class="btn btn-quiet" id="btnReviewDue">Due Today</button>
+      <button class="btn btn-quiet" id="btnReviewAll">All Words</button>
+      <button class="btn btn-quiet" id="btnReviewHard">Weak Words</button>
+    </div>
+    <p class="hint" id="practiceHint"></p>
+  </section>
+
+  <section class="wrap section hidden" id="examRoot"></section>
+  <section class="wrap section hidden" id="reviewRoot"></section>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="lib/camellia.js"></script>
+<script src="lib/md.js"></script>
+<script src="lib/fr-grammar.js"></script>
+<script src="lib/en-grammar.js"></script>
+<script src="lib/store.js"></script>
+<script src="lib/quiz.js"></script>
+<script src="lib/practice-keys.js"></script>
+<script src="study.js"></script>
+</body>
+</html>

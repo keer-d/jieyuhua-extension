@@ -1,18 +1,24 @@
 {
   "manifest_version": 3,
-  "name": "Jieyuhua - AI Text Explainer",
-  "version": "1.2.0",
-  "description": "Select text on any webpage, click the floating camellia button, and get an inline streaming AI explanation. Supports OpenAI, DeepSeek, Claude, and more.",
+  "name": "FluentLoop",
+  "version": "2.23.0",
+  "description": "AI subtitle and vocabulary learning with contextual explanations, smart capture, and spaced repetition.",
   "permissions": [
     "contextMenus",
     "storage",
-    "sidePanel"
+    "sidePanel",
+    "scripting",
+    "tabs",
+    "downloads"
   ],
   "host_permissions": [
     "https://api.openai.com/*",
     "https://api.anthropic.com/*",
     "https://api.deepseek.com/*",
+    "https://ark.cn-beijing.volces.com/*",
     "https://api.moonshot.cn/*",
+    "https://open.bigmodel.cn/*",
+    "https://dashscope.aliyuncs.com/*",
     "https://openrouter.ai/*",
     "https://*/*"
   ],
@@ -21,8 +27,14 @@
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "lib/camellia.js",
+        "lib/md.js",
+        "content.js"
+      ],
       "run_at": "document_idle"
     }
   ],
@@ -30,11 +42,24 @@
     "default_path": "sidepanel.html"
   },
   "action": {
-    "default_title": "Open Jieyuhua Side Panel"
+    "default_title": "Open FluentLoop"
   },
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "study.html",
+        "study.css",
+        "study.js",
+        "lib/*.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
 }

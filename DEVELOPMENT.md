@@ -1,12 +1,12 @@
 # Development Guide
 
-Jieyuhua is a Manifest V3 Chrome extension written with plain HTML, CSS, and JavaScript. There is no bundler, package manager, or build step.
+FluentLoop is a Manifest V3 Chrome extension written with plain HTML, CSS, and JavaScript. There is no bundler, package manager, or build step.
 
 ## Local Workflow
 
 1. Edit source files.
 2. Go to `chrome://extensions/`.
-3. Click the reload button on Jieyuhua.
+3. Click the reload button on FluentLoop.
 4. Refresh any webpage that was already open.
 5. Test selection and streaming again.
 
@@ -15,7 +15,7 @@ Jieyuhua is a Manifest V3 Chrome extension written with plain HTML, CSS, and Jav
 ### Background Service Worker
 
 1. Open `chrome://extensions/`.
-2. Find Jieyuhua.
+2. Find FluentLoop.
 3. Click `service worker`.
 4. Use the DevTools console to inspect provider request errors.
 
@@ -85,7 +85,7 @@ For a source release, upload the repository files directly.
 For a Chrome Web Store package, zip the extension folder while excluding repository metadata and local files:
 
 ```bash
-zip -r jieyuhua-extension.zip . \
+zip -r fluentloop.zip . \
   -x ".git/*" \
   -x ".DS_Store" \
   -x "*.log" \

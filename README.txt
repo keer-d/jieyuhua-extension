@@ -1,4 +1,4 @@
-Jieyuhua - Quick Install
+FluentLoop - Quick Install
 
 1. Open chrome://extensions/ in Chrome.
 2. Enable Developer mode.

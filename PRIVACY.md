@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Jieyuhua is a local Chrome extension. The project does not run its own backend server and does not include analytics, tracking, advertising, or telemetry scripts.
+FluentLoop is a local Chrome extension. The project does not run its own backend server and does not include analytics, tracking, advertising, or telemetry scripts.
 
 ## Data Stored Locally
 

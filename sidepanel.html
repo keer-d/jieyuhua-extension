@@ -3,112 +3,252 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jieyuhua</title>
+  <title>FluentLoop</title>
   <link rel="stylesheet" href="sidepanel.css" />
 </head>
 <body>
-  <!-- ============ Top bar ============ -->
+  <!-- ============ Treasure Map Topbar ============ -->
   <header class="topbar">
     <div class="brand">
-      <span class="brand-mark">
-        <svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true">
-          <defs>
-            <radialGradient id="camOa" cx="50%" cy="36%" r="66%"><stop offset="0%" stop-color="#ffffff"/><stop offset="68%" stop-color="#f7f1e6"/><stop offset="100%" stop-color="#e4dac6"/></radialGradient>
-            <radialGradient id="camIa" cx="50%" cy="40%" r="62%"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#efe6d4"/></radialGradient>
-          </defs>
-          <g>
-            <ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOa)" transform="rotate(0 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOa)" transform="rotate(45 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOa)" transform="rotate(90 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOa)" transform="rotate(135 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOa)" transform="rotate(180 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOa)" transform="rotate(225 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOa)" transform="rotate(270 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOa)" transform="rotate(315 24 24)"/>
-          </g>
-          <g>
-            <ellipse cx="24" cy="15" rx="3.7" ry="7" fill="url(#camIa)" transform="rotate(22 24 24)"/><ellipse cx="24" cy="15" rx="3.7" ry="7" fill="url(#camIa)" transform="rotate(112 24 24)"/><ellipse cx="24" cy="15" rx="3.7" ry="7" fill="url(#camIa)" transform="rotate(202 24 24)"/><ellipse cx="24" cy="15" rx="3.7" ry="7" fill="url(#camIa)" transform="rotate(292 24 24)"/>
-          </g>
-          <circle cx="24" cy="24" r="3.6" fill="#c9b489"/><circle cx="24" cy="24" r="1.5" fill="#a98f59"/>
-        </svg>
-      </span>
-      <span class="brand-name">Jieyuhua</span>
+      <span class="brand-mark" data-camellia="22"></span>
+      <span class="brand-name">FLUENTLOOP</span>
     </div>
+    <div class="lang-switch" id="langSwitch"></div>
     <div class="topbar-actions">
-      <button id="newChatBtn" class="icon-btn" title="New chat" aria-label="New chat">
-        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      <button id="newChatBtn" class="icon-btn" title="New Chat" aria-label="New Chat">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      </button>
+      <button id="studioBtn" class="icon-btn" title="Open Fullscreen Studio" aria-label="Open Studio">
+        <svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="4" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2" fill="none"/><path d="M8 20h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       </button>
       <button id="settingsBtn" class="icon-btn" title="Settings" aria-label="Settings">
-        <svg viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="8" cy="7" r="1.6" fill="currentColor"/><circle cx="14" cy="12" r="1.6" fill="currentColor"/><circle cx="10" cy="17" r="1.6" fill="currentColor"/></svg>
       </button>
     </div>
   </header>
 
-  <!-- ============ Chat view ============ -->
-  <main id="chatView" class="chat-view">
+  <!-- ============ Daily Bloom Progress Bar ============ -->
+  <div class="daily-reward-bar" id="dailyRewardBar">
+    <div class="dr-left">
+      <span class="dr-icon" data-camellia="18"></span>
+      <div class="dr-text">
+        <div class="dr-title" id="drTitle">Collected Today: 0 words</div>
+        <div class="dr-status" id="drStatus">Morning Dew · 0 Words</div>
+      </div>
+    </div>
+    <div class="dr-milestones" id="drMilestones">
+      <span class="dr-stage" data-min="1" title="1 Word · Seed">🌱</span>
+      <span class="dr-stage" data-min="5" title="5 Words · Scroll">📜</span>
+      <span class="dr-stage" data-min="10" title="10 Words · Bloom">⚜️</span>
+      <span class="dr-stage" data-min="20" title="20 Words · Mastery">🏛️</span>
+    </div>
+  </div>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab is-on" data-view="chat"><span class="tab-glow"></span><span class="tab-txt">Studio</span></button>
+    <button class="tab" data-view="shelf" id="shelfTab"><span class="tab-glow"></span><span class="tab-txt">Vault</span></button>
+    <button class="tab" data-view="practice"><span class="tab-glow"></span><span class="tab-txt">Practice</span><span class="due-dot hidden" id="dueDot"></span></button>
+  </nav>
+
+  <!-- ============ Studio Chat ============ -->
+  <main id="chatView" class="view chat-view">
     <div id="messages" class="messages">
       <div class="empty-state" id="emptyState">
-        <div class="empty-mark">
-          <svg viewBox="0 0 48 48" width="32" height="32" aria-hidden="true">
-            <defs>
-              <radialGradient id="camOb" cx="50%" cy="36%" r="66%"><stop offset="0%" stop-color="#ffffff"/><stop offset="68%" stop-color="#f7f1e6"/><stop offset="100%" stop-color="#e4dac6"/></radialGradient>
-              <radialGradient id="camIb" cx="50%" cy="40%" r="62%"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#efe6d4"/></radialGradient>
-            </defs>
-            <g>
-              <ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOb)" transform="rotate(0 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOb)" transform="rotate(45 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOb)" transform="rotate(90 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOb)" transform="rotate(135 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOb)" transform="rotate(180 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOb)" transform="rotate(225 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOb)" transform="rotate(270 24 24)"/><ellipse cx="24" cy="11.5" rx="5.4" ry="10.4" fill="url(#camOb)" transform="rotate(315 24 24)"/>
-            </g>
-            <g>
-              <ellipse cx="24" cy="15" rx="3.7" ry="7" fill="url(#camIb)" transform="rotate(22 24 24)"/><ellipse cx="24" cy="15" rx="3.7" ry="7" fill="url(#camIb)" transform="rotate(112 24 24)"/><ellipse cx="24" cy="15" rx="3.7" ry="7" fill="url(#camIb)" transform="rotate(202 24 24)"/><ellipse cx="24" cy="15" rx="3.7" ry="7" fill="url(#camIb)" transform="rotate(292 24 24)"/>
-            </g>
-            <circle cx="24" cy="24" r="3.6" fill="#c9b489"/><circle cx="24" cy="24" r="1.5" fill="#a98f59"/>
-          </svg>
+        <div class="empty-astrolabe" id="emptyAstrolabe"></div>
+        <p class="empty-title">Watch · Understand · Save · Remember</p>
+        <p class="empty-sub">Select text on any page for instant depth analysis. Hover subtitles on YouTube or Bilibili for phonetics and gloss. Conversations archive automatically.</p>
+        <div class="quick">
+          <button class="chip" data-act="summarize">📜 Digest Page Core</button>
+          <button class="chip" data-act="paste-article">📖 Import Long Article</button>
+          <button class="chip" data-act="save-page">📥 Save Entire Page</button>
+          <button class="chip" data-act="review">Start Practice</button>
+          <button class="chip" data-act="studio">🏛️ Open Full Studio</button>
         </div>
-        <p class="empty-title">Select text · Explain inline</p>
-        <p class="empty-sub">Select text on a webpage, click the camellia button,<br/>and get an inline AI explanation. You can also chat here.</p>
       </div>
     </div>
 
     <div class="composer">
-      <textarea id="input" class="composer-input" rows="1" placeholder="Ask a question. Enter to send, Shift+Enter for a new line..."></textarea>
+      <div id="composerActions" class="composer-actions hidden">
+        <button type="button" class="chip" id="btnTenseAnalysis">⏱ Tense Analysis · 时态分析</button>
+      </div>
+      <textarea id="input" class="composer-input" rows="1" placeholder="Ask anything or hover video subtitles… Enter to send"></textarea>
       <button id="sendBtn" class="send-btn" title="Send" aria-label="Send">
-        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 12l16-8-6 8 6 8z" fill="currentColor"/></svg>
+        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 12l16-8-6 8 6 8z" fill="currentColor"/></svg>
       </button>
     </div>
   </main>
 
-  <!-- ============ Settings view ============ -->
-  <section id="settingsView" class="settings-view hidden">
-    <div class="settings-scroll">
-      <h2 class="settings-h">Model Settings</h2>
+  <!-- ============ Vault ============ -->
+  <section id="shelfView" class="view hidden">
+    <div class="scroll">
+      <div class="wall-head">
+        <div class="wall-stats" id="wallStats"></div>
+      </div>
+
+      <div id="shelfRoot">
+        <!-- Monthly Study Heatmap -->
+        <div class="codex-card calendar-card" id="calCard">
+          <div class="cal-header">
+            <div class="cal-title-wrap">
+              <span class="cal-icon">📅</span>
+              <span class="cal-title" id="calMonthTitle">August 2026 · Study Heatmap</span>
+            </div>
+            <div class="cal-nav">
+              <button class="cal-nav-btn" id="calPrevBtn" title="Previous Month">‹</button>
+              <button class="cal-nav-btn" id="calTodayBtn" title="Current Month">Today</button>
+              <button class="cal-nav-btn" id="calNextBtn" title="Next Month">›</button>
+            </div>
+          </div>
+          <div class="cal-weekdays">
+            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+          <div class="cal-footer">
+            <div class="cal-legend">
+              <span class="cal-legend-label">Density:</span>
+              <span class="cal-dot lvl-0" title="0 words"></span>
+              <span class="cal-dot lvl-1" title="1-2 words"></span>
+              <span class="cal-dot lvl-2" title="3-6 words"></span>
+              <span class="cal-dot lvl-3" title="7+ words"></span>
+            </div>
+            <span class="cal-stats-text" id="calMonthStats">0 words logged this month</span>
+          </div>
+        </div>
+
+        <!-- Local Vocabulary Mirror & Backup -->
+        <div class="codex-card backup-card">
+          <div class="backup-header">
+            <div class="backup-title-wrap">
+              <span class="backup-seal">📂</span>
+              <span class="backup-title">Vocabulary Ledger & Local Backup</span>
+            </div>
+            <span class="backup-badge">🛡️ Realtime Mirror</span>
+          </div>
+          <p class="backup-sub">Permanently stored in local disk mirror. Export anytime to JSON or CSV for Excel / Notion.</p>
+          <div class="backup-actions">
+            <button class="ghost-btn" id="exportBtn" title="Export Full JSON Backup">💾 Export JSON</button>
+            <button class="ghost-btn" id="exportCsvBtn" title="Export CSV for Excel/Notion">📊 Export CSV</button>
+            <button class="ghost-btn" id="importBtn" title="Import Vocabulary Backup">📥 Import Backup</button>
+            <input type="file" id="importFile" accept="application/json" class="hidden" />
+          </div>
+        </div>
+
+        <div class="map-section-head">
+          <div class="map-compass" id="mapCompass"></div>
+          <div>
+            <h3 class="sec-h">Knowledge Realms & Categories</h3>
+            <p class="sec-sub" id="shelfSub">Auto-organized by topic tags. Each realm has its dedicated Ebbinghaus curve.</p>
+          </div>
+        </div>
+
+        <!-- Knowledge Realms Grid -->
+        <div class="folders" id="folders"></div>
+
+        <!-- Recent Vocabulary Ledger -->
+        <div class="codex-card ledger-box">
+          <h3 class="sec-h" style="font-size:14px;margin-bottom:8px;">📜 Vocabulary Stream</h3>
+          <div id="ledgerList" class="ledger-list"></div>
+        </div>
+      </div>
+
+      <!-- Realm Cards List -->
+      <div id="shelfCards" class="hidden">
+        <button class="back" id="backToFolders">← Back to Vault Map</button>
+        <h3 class="sec-h" id="folderTitle"></h3>
+        <div class="cards" id="cards"></div>
+      </div>
+
+      <!-- Single Scroll Detail -->
+      <div id="shelfDetail" class="hidden">
+        <button class="back" id="backToCards">← Back to Realm</button>
+        <div id="detail"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Practice (SM-2 Spaced Repetition) ============ -->
+  <section id="practiceView" class="view hidden">
+    <div class="scroll" id="practiceScroll">
+      <div id="practiceHome">
+        <h3 class="sec-h">Ebbinghaus Practice Arena</h3>
+        <p class="sec-sub" id="practiceSub">Powered by SM-2 spaced repetition: mastered words are spaced further, unfamiliar words return promptly.</p>
+
+        <label class="field">
+          <span class="field-label">Practice Realm / Topic</span>
+          <select id="scope" class="field-control"></select>
+        </label>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <label class="field" style="margin-bottom:0">
+            <span class="field-label">Question Format</span>
+            <select id="quizType" class="field-control">
+              <option value="cloze" selected>Word → meaning (recommended)</option>
+              <option value="mixed">Word → meaning</option>
+              <option value="sense">Phrase / word in context</option>
+              <option value="tense" class="fr-only">Verb tense ID</option>
+              <option value="inflect" class="fr-only">Verb form pick (voir → voyais…)</option>
+            </select>
+          </label>
+
+          <label class="field" style="margin-bottom:0">
+            <span class="field-label">Engine</span>
+            <select id="quizSource" class="field-control">
+              <option value="local">⚡ Local Smart Engine</option>
+              <option value="ai">🤖 AI Context Engine</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="two-up" style="margin-top:14px">
+          <button class="primary-btn" id="startExam">Start Practice <span id="dueCount"></span></button>
+        </div>
+
+        <div class="review-quick-bar" style="display:flex;gap:6px;margin-top:10px;justify-content:center;">
+          <button class="mini-btn" id="btnReviewDue" title="Review words due today">Due Today</button>
+          <button class="mini-btn" id="btnReviewAll" title="Practice all words in vault">All Words</button>
+          <button class="mini-btn" id="btnReviewHard" title="Focus on hard or missed words">Weak Words</button>
+        </div>
+        <p class="hint" id="practiceHint" style="margin-top:10px"></p>
+      </div>
+
+      <div id="examRoot" class="hidden"></div>
+      <div id="reviewRoot" class="hidden"></div>
+    </div>
+  </section>
+
+  <!-- ============ Settings ============ -->
+  <section id="settingsView" class="view hidden">
+    <div class="scroll">
+      <h3 class="sec-h">AI Model & Key Settings</h3>
+      <p class="sec-sub">Your API Key is stored securely on your local device.</p>
 
       <label class="field">
-        <span class="field-label">Provider</span>
-        <select id="provider" class="field-control">
-          <option value="openai">OpenAI (ChatGPT)</option>
-          <option value="deepseek">DeepSeek</option>
-          <option value="moonshot">Moonshot / Kimi</option>
-          <option value="zhipu">Zhipu GLM</option>
-          <option value="doubao">Doubao (Volcano Engine)</option>
-          <option value="qwen">Qwen</option>
-          <option value="openrouter">OpenRouter</option>
-          <option value="anthropic">Anthropic (Claude)</option>
-          <option value="custom">Custom (OpenAI-compatible)</option>
-        </select>
-      </label>
-
-      <label class="field">
-        <span class="field-label">API Key</span>
+        <span class="field-label">OpenAI API Key <span class="req">*</span></span>
         <input id="apiKey" class="field-control" type="password" placeholder="sk-..." autocomplete="off" />
-        <span class="field-hint">Stored in your local browser and sent only to your selected provider for authentication.</span>
+        <span class="field-hint">Your OpenAI API Key is securely stored in local storage.</span>
       </label>
 
       <label class="field">
-        <span class="field-label">Model</span>
-        <input id="model" class="field-control" type="text" placeholder="For example: gpt-4o-mini" />
+        <span class="field-label">Primary Chat Model</span>
+        <input id="model" class="field-control" type="text" placeholder="gpt-4o-mini" />
+        <span class="field-hint">Recommended: <code>gpt-4o-mini</code> (lightning fast, cost-efficient), or <code>gpt-4o</code>.</span>
+      </label>
+
+      <label class="field">
+        <span class="field-label">Subtitle / Hover Fast Model (Optional)</span>
+        <input id="hoverModel" class="field-control" type="text" placeholder="gpt-4o-mini" />
+        <span class="field-hint">Dedicated lightweight model for subtitle hover lookups. Leave empty for default.</span>
       </label>
 
       <label class="field">
         <span class="field-label">Base URL</span>
         <input id="baseUrl" class="field-control" type="text" placeholder="https://api.openai.com/v1" />
-        <span class="field-hint">Provider presets fill this automatically. Edit it for custom endpoints.</span>
+        <span class="field-hint">Default is <code>https://api.openai.com/v1</code>. Change if using a custom proxy.</span>
       </label>
 
       <label class="field">
-        <span class="field-label">System Prompt (optional)</span>
-        <textarea id="systemPrompt" class="field-control" rows="3" placeholder="For example: Explain complex ideas clearly with short examples."></textarea>
+        <span class="field-label">Custom Tutor Instructions (Optional)</span>
+        <textarea id="systemPrompt" class="field-control" rows="3" placeholder="e.g. Focus on business, tech and AI terminology with an elegant and concise tone."></textarea>
       </label>
 
       <div class="settings-actions">
@@ -118,6 +258,32 @@
     </div>
   </section>
 
+  <!-- Import Article Modal -->
+  <div class="paste-overlay hidden" id="pasteOverlay">
+    <div class="paste-modal">
+      <div class="paste-modal-head">
+        <span class="paste-modal-title">📖 Import Long Article</span>
+        <button class="icon-btn" id="pasteClose" title="Close" aria-label="Close">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <textarea id="pasteInput" class="paste-input" rows="10" placeholder="Paste foreign article text here. Core vocabulary, key insights, and grammar structures will be automatically extracted…"></textarea>
+      <div class="paste-modal-foot">
+        <span class="paste-hint" id="pasteHint">Typically takes 10–25s</span>
+        <button class="primary-btn" id="pasteGo" disabled>Import to Vault</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="lib/camellia.js"></script>
+  <script src="lib/md.js"></script>
+  <script src="lib/fr-grammar.js"></script>
+  <script src="lib/en-grammar.js"></script>
+  <script src="lib/prompts.js"></script>
+  <script src="lib/stream.js"></script>
+  <script src="lib/store.js"></script>
+  <script src="lib/quiz.js"></script>
+  <script src="lib/practice-keys.js"></script>
   <script src="sidepanel.js"></script>
 </body>
 </html>
